@@ -28,8 +28,6 @@ import re
 import datetime
 import arrow
 
-from num2words import num2words
-
 __author__ = 'TREE'
 
 LOGGER = getLogger(__name__)
