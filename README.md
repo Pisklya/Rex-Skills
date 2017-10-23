@@ -9,6 +9,7 @@ This skill provides a way to perform interactive and running calculations by voi
 * "say first number: 4"
 * "say second number: 5"
 * "say operation: add"
+* "say next operation: add 50"
 
 ## Credits 
 TREE Industries
