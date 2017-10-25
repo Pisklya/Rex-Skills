@@ -1,1 +1,1 @@
-(multiply|add|subtract|divide|) (?P<Num>.*)
+(multiply|add|subtract|divide|square root|) (?P<Num>.*)

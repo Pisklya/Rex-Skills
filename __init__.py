@@ -25,6 +25,7 @@ from mycroft.skills.context import *
 import os
 import string
 import re
+import math
 
 __author__ = 'TREE'
 
@@ -48,7 +49,6 @@ class MathSkill(MycroftSkill):
         self.speak('Please provide the second number.',  expect_response=True)
         print(self.num1)
 
-
     @intent_handler(IntentBuilder("SecondNumberIntent").require("Num2").require("FirstNumberContext").build())
     @adds_context('SecondNumberContext')
     @removes_context('FirstNumberContext')
@@ -66,16 +66,16 @@ class MathSkill(MycroftSkill):
         #print(utterance)
         if "add" in utterance:
             self.answer = float(self.num1) + float(self.num2)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "multiply" in utterance:
             self.answer = float(self.num1) * float(self.num2)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "divide" in utterance:
             self.answer = float(self.num1) / float(self.num2)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "subtract" in utterance:
             self.answer = float(self.num1) - float(self.num2)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}'.format(self.answer))
         self.speak('Would you like to perform another operation?',  expect_response=True)
 
             
@@ -87,20 +87,38 @@ class MathSkill(MycroftSkill):
         print(self.num)
         if "add" in utterance:
             self.answer = float(self.answer) + float(self.num)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "multiply" in utterance:
             self.answer = float(self.answer) * float(self.num)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "x" in utterance:
             self.answer = float(self.answer) * float(self.num)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "divide" in utterance:
             self.answer = float(self.answer) / float(self.num)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
         elif "subtract" in utterance:
             self.answer = float(self.answer) - float(self.num)
-            self.speak('The answer is %s.' % (self.answer))
+            self.speak('The answer is {}.'.format(self.answer))
+        elif "square root" in utterance:
+            self.answer = math.sqrt(self.answer)
+            self.speak('The answer is {}.'.format(self.answer))
         self.speak('Would you like to perform another operation?',  expect_response=True)
+
+    @intent_handler(IntentBuilder("TangentIntent").require("Tangent").require("Num").build())
+    def handle_tangent(self, message):
+        utterance = message.data.get('utterance')
+        self.num = message.data.get("Num")
+        number = float(self.num)
+        if "degrees" in utterance:
+            self.answer = math.tan(math.radians(number))
+            self.speak('The answer is {:f} degrees.'.format(self.answer))
+        elif "radians" in utterance:
+            self.answer = math.tan(number)
+            self.speak('The answer is {:f} radians.'.format(self.answer))
+        else:
+            self.answer = math.tan(number)
+            self.speak('The answer is {:f} radians.'.format(self.answer))
 
 def create_skill():
     return MathSkill()
